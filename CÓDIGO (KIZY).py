@@ -1,7 +1,9 @@
 cliente = {
+
     'nome': '',
     'email': '',
     'senha': ''
+
 }
 
 camisas_M = {
@@ -154,10 +156,9 @@ carrinho_compras = {}
 preco_produtos = {}
 
 def cadastro ():
-    print('-'*50)
+    print('-'*80)
     print('CADASTRO\n ')
-    nome = input('DIGITE SEU NOME: ').upper()
-    cpf = input('DIGITE SEU CPF: ')
+    nome = input('DIGITE SEU NOME DE USUÁRIO: ').upper()
     email = input('DIGITE SEU EMAIL: ').lower()
     senha = input('DIGITE SUA SENHA: ')
     cliente['nome'] = nome
@@ -175,18 +176,17 @@ while True:
     else:
         print('OPÇÃO INVÁLIDA!')
 
-print('-'*50)
+print('-'*80)
 print('CADASTRO REALIZADO, FAÇA LOGIN PARA TER ACESSO AO CATALOGO')
 
 def login():
-    print('-'*50)
-    print('LOGIN')
-    print('-'*50)
+    print('-'*80)
+    print('LOGIN\n')
 
     while True:
 
-        nome = input('Digite seu nome: ').upper()
-        senha = input('Digite sua senha: ')
+        nome = input('USUÁRIO: ').upper()
+        senha = input('SENHA: ')
 
         if nome in cliente['nome']:
             if senha == cliente['senha']:
@@ -202,7 +202,7 @@ def login():
 
 login()
 
-print('\n----CATALOGO----')
+print('\n----CATALOGO----\n')
 
 def camisetas():
 
@@ -330,179 +330,220 @@ def camisetas():
             precos = preco_produtos[produto]
             print(f'{quantidade}x {produto} - Preços: {precos}')
 
-escolha = input('O QUE VOCÊ PROCURA?\n(1) CAMISETAS\n(2) CALÇA\n(3) BERMUDA\n(4) MOLETOM\n(5) BONÉ\n(6) GORRO\n(7) SLIDE\nDIGITE O NÚMERO: ')
+while True:
 
-if escolha == '1':
-    camisetas()
+    escolha = input('O QUE VOCÊ PROCURA?\n\n(1) CAMISETAS\n(2) CALÇA\n(3) BERMUDA\n(4) MOLETOM\n(5) BONÉ\n(6) GORRO\n(7) SLIDE\n\nDIGITE O NÚMERO: ')
 
-elif escolha == '2':
-    print('\n----CALÇAS----')
-    while True:
-        for chave, produto_preco in calças.items():
-            print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
+    if escolha == '1':
+        camisetas()
 
-        escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
-        if escolha_produto == 'X':
-            print('SESSÃO ENCERRADA')
-            break
-        
-        elif escolha_produto in calças:
-            produto = list(calças[escolha_produto].keys())[0]
-            preco = list(calças[escolha_produto].values())[0]
+    elif escolha == '2':
+        print('\n----CALÇAS----')
+        while True:
+            for chave, produto_preco in calças.items():
+                print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
+
+            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            if escolha_produto == 'X':
+                print('SESSÃO ENCERRADA')
+                break
             
-            if produto in carrinho_compras:
-                carrinho_compras[produto] += 1
+            elif escolha_produto in calças:
+                produto = list(calças[escolha_produto].keys())[0]
+                preco = list(calças[escolha_produto].values())[0]
+                
+                if produto in carrinho_compras:
+                    carrinho_compras[produto] += 1
+
+                else:
+                    carrinho_compras[produto] = 1
+                    preco_produtos[produto] = [preco]
+                    
+                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
 
             else:
-                carrinho_compras[produto] = 1
-                preco_produtos[produto] = [preco]
-                
-            print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print('PRODUTO NÃO ENCONTRADO')
+    
+        print('\nCARRINHO DE COMPRAS:')
+        for produto, quantidade in carrinho_compras.items():
+            precos = preco_produtos[produto]
+            print(f'{quantidade}x {produto} - Preços: {precos}')
 
-        else:
-            print('PRODUTO NÃO ENCONTRADO')
-  
-    print('\nCARRINHO DE COMPRAS:')
-    for produto, quantidade in carrinho_compras.items():
-        precos = preco_produtos[produto]
-        print(f'{quantidade}x {produto} - Preços: {precos}')
+    elif escolha == '3':
 
-elif escolha == '3':
+        print('\n----BERMUDAS----')
 
-    print('\n----BERMUDAS----')
+        while True:
 
-    while True:
+            for chave, produto_preco in bermuda.items():
+                print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
-        for chave, produto_preco in bermuda.items():
-            print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
-
-        escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
-        if escolha_produto == 'X':
-            print('SESSÃO ENCERRADA')
-            break
-        
-        elif escolha_produto in bermuda:
-            produto = list(bermuda[escolha_produto].keys())[0]
-            preco = list(bermuda[escolha_produto].values())[0]
+            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            if escolha_produto == 'X':
+                print('SESSÃO ENCERRADA')
+                break
             
-            if produto in carrinho_compras:
-                carrinho_compras[produto] += 1
+            elif escolha_produto in bermuda:
+                produto = list(bermuda[escolha_produto].keys())[0]
+                preco = list(bermuda[escolha_produto].values())[0]
+                
+                if produto in carrinho_compras:
+                    carrinho_compras[produto] += 1
+
+                else:
+                    carrinho_compras[produto] = 1
+                    preco_produtos[produto] = [preco]
+                    
+                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
 
             else:
-                carrinho_compras[produto] = 1
-                preco_produtos[produto] = [preco]
-                
-            print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print('PRODUTO NÃO ENCONTRADO')
+    
+        print('\nCARRINHO DE COMPRAS:')
+        for produto, quantidade in carrinho_compras.items():
+            precos = preco_produtos[produto]
+            print(f'{quantidade}x {produto} - Preços: {precos}')
 
-        else:
-            print('PRODUTO NÃO ENCONTRADO')
-  
-    print('\nCARRINHO DE COMPRAS:')
-    for produto, quantidade in carrinho_compras.items():
-        precos = preco_produtos[produto]
-        print(f'{quantidade}x {produto} - Preços: {precos}')
+    elif escolha == '4':
 
-elif escolha == '4':
+        print('\n----MOLETOMS----')
 
-    print('\n----MOLETOMS----')
+        while True:
 
-    while True:
-
-        for chave, produto_preco in moletom.items():
-            print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
-        
-        escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
-        if escolha_produto == 'X':
-            print('SESSÃO ENCERRADA')
-            break
-        
-        elif escolha_produto in moletom:
-            produto = list(moletom[escolha_produto].keys())[0]
-            preco = list(moletom[escolha_produto].values())[0]
+            for chave, produto_preco in moletom.items():
+                print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
             
-            if produto in carrinho_compras:
-                carrinho_compras[produto] += 1
+            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            if escolha_produto == 'X':
+                print('SESSÃO ENCERRADA')
+                break
+            
+            elif escolha_produto in moletom:
+                produto = list(moletom[escolha_produto].keys())[0]
+                preco = list(moletom[escolha_produto].values())[0]
+                
+                if produto in carrinho_compras:
+                    carrinho_compras[produto] += 1
+
+                else:
+                    carrinho_compras[produto] = 1
+                    preco_produtos[produto] = [preco]
+                    
+                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
 
             else:
-                carrinho_compras[produto] = 1
-                preco_produtos[produto] = [preco]
-                
-            print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print('PRODUTO NÃO ENCONTRADO')
+    
+        print('\nCARRINHO DE COMPRAS:')
+        for produto, quantidade in carrinho_compras.items():
+            precos = preco_produtos[produto]
+            print(f'{quantidade}x {produto} - Preços: {precos}')
 
-        else:
-            print('PRODUTO NÃO ENCONTRADO')
-  
-    print('\nCARRINHO DE COMPRAS:')
-    for produto, quantidade in carrinho_compras.items():
-        precos = preco_produtos[produto]
-        print(f'{quantidade}x {produto} - Preços: {precos}')
+    elif escolha == '5':
 
-elif escolha == '5':
+        print('\n----BONÉS----')
 
-    print('\n----BONÉS----')
+        while True:
 
-    while True:
+            for chave, produto_preco in bone.items():
+                print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
-        for chave, produto_preco in bone.items():
-            print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
-
-        escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
-        if escolha_produto == 'X':
-            print('SESSÃO ENCERRADA')
-            break
-        
-        elif escolha_produto in bone:
-            produto = list(bone[escolha_produto].keys())[0]
-            preco = list(bone[escolha_produto].values())[0]
+            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            if escolha_produto == 'X':
+                print('SESSÃO ENCERRADA')
+                break
             
-            if produto in carrinho_compras:
-                carrinho_compras[produto] += 1
+            elif escolha_produto in bone:
+                produto = list(bone[escolha_produto].keys())[0]
+                preco = list(bone[escolha_produto].values())[0]
+                
+                if produto in carrinho_compras:
+                    carrinho_compras[produto] += 1
+
+                else:
+                    carrinho_compras[produto] = 1
+                    preco_produtos[produto] = [preco]
+                    
+                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
 
             else:
-                carrinho_compras[produto] = 1
-                preco_produtos[produto] = [preco]
-                
-            print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print('PRODUTO NÃO ENCONTRADO')
+    
+        print('\nCARRINHO DE COMPRAS:')
+        for produto, quantidade in carrinho_compras.items():
+            precos = preco_produtos[produto]
+            print(f'{quantidade}x {produto} - Preços: {precos}')
 
-        else:
-            print('PRODUTO NÃO ENCONTRADO')
-  
-    print('\nCARRINHO DE COMPRAS:')
-    for produto, quantidade in carrinho_compras.items():
-        precos = preco_produtos[produto]
-        print(f'{quantidade}x {produto} - Preços: {precos}')
+    elif escolha == '6':
 
-elif escolha == '6':
+        print('\n----GORROS----')
 
-    print('\n----GORROS----')
+        while True:
 
-    while True:
-        
-        for chave, produto_preco in gorro.items():
-            print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
+            for chave, produto_preco in gorro.items():
+                print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
-        escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
-        if escolha_produto == 'X':
-            print('SESSÃO ENCERRADA')
-            break
-        
-        elif escolha_produto in gorro:
-            produto = list(gorro[escolha_produto].keys())[0]
-            preco = list(gorro[escolha_produto].values())[0]
+            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            if escolha_produto == 'X':
+                print('SESSÃO ENCERRADA')
+                break
             
-            if produto in carrinho_compras:
-                carrinho_compras[produto] += 1
+            elif escolha_produto in gorro:
+                produto = list(gorro[escolha_produto].keys())[0]
+                preco = list(gorro[escolha_produto].values())[0]
+                
+                if produto in carrinho_compras:
+                    carrinho_compras[produto] += 1
+
+                else:
+                    carrinho_compras[produto] = 1
+                    preco_produtos[produto] = [preco]
+                    
+                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
 
             else:
-                carrinho_compras[produto] = 1
-                preco_produtos[produto] = [preco]
-                
-            print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print('PRODUTO NÃO ENCONTRADO')
+    
+        print('\nCARRINHO DE COMPRAS:')
+        for produto, quantidade in carrinho_compras.items():
+            precos = preco_produtos[produto]
+            print(f'{quantidade}x {produto} - Preços: {precos}')
 
-        else:
-            print('PRODUTO NÃO ENCONTRADO')
-  
-    print('\nCARRINHO DE COMPRAS:')
-    for produto, quantidade in carrinho_compras.items():
-        precos = preco_produtos[produto]
-        print(f'{quantidade}x {produto} - Preços: {precos}')
+    elif escolha == '7':
+        print('\n----SLIDE----')
+        while True:
+            for chave, produto_preco in slide.items():
+                print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
+
+            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            if escolha_produto == 'X':
+                print('SESSÃO ENCERRADA')
+                break
+            
+            elif escolha_produto in slide:
+                produto = list(slide[escolha_produto].keys())[0]
+                preco = list(slide[escolha_produto].values())[0]
+                
+                if produto in carrinho_compras:
+                    carrinho_compras[produto] += 1
+
+                else:
+                    carrinho_compras[produto] = 1
+                    preco_produtos[produto] = [preco]
+                    
+                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+
+            else:
+                print('PRODUTO NÃO ENCONTRADO')
+    
+        print('\nCARRINHO DE COMPRAS:')
+        for produto, quantidade in carrinho_compras.items():
+            precos = preco_produtos[produto]
+            print(f'{quantidade}x {produto} - Preços: {precos}')
+
+    escolha_finalizar = input('\nSE DESEJA COMPRAR MAIS PRODUTOS PRECIONE (ENTER) OU DIGITE  X PARA FINALIZAR A COMPRA: ').upper()
+
+    if escolha_finalizar == 'X':
+        print('SESSÃO ENCERRADA')
+
+        break
