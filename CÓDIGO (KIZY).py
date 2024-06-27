@@ -6,6 +6,28 @@ cliente = {
 
 }
 
+loc_cliente = {
+
+    'destinatario': '',
+    'cep': '',
+    'rua': '',
+    'numero': '',
+    'complemento': '',
+    'bairro': '',
+    'cidade': '',
+    'estado': ''
+}
+
+cartao_credito = {
+
+    'numero_cartao': '',
+    'nome_impresso': '',
+    'data_nascimento': '',
+    'validade': '',
+    'codigo_segurança': '',
+    'numero_parcelas': ''
+}
+
 camisas_M = {
     '0': {'GROW COMPANY TRIANGLE VERDE': 129.99},
     '1': {'BAZON MESCLA': 129.99},
@@ -166,7 +188,7 @@ def cadastro ():
     cliente['senha'] = senha
 
 while True:
-    cadastro_cliente = input('DIGITE (1) PARA SE CADASTRAR: ').upper()
+    cadastro_cliente = input('DIGITE (1) PARA SE CADASTRAR: ')
     
     if cadastro_cliente == '1':
         cadastro()
@@ -179,6 +201,77 @@ while True:
 print('-'*80)
 print('CADASTRO REALIZADO, FAÇA LOGIN PARA TER ACESSO AO CATALOGO')
 
+def loc_usuario():
+
+    nome_destinatario = input('\nNOME COMPLETO: ').upper()
+    cep = input('CEP: ')
+    rua = input('RUA: ').upper()
+    num = input('N°: ')
+    complemento = input('COMPLEMENTO: ').upper()
+    bairro = input('BAIRRO: ').upper()
+    cidade = input('CIDADE: ').upper()
+    estado = input('ESTADO: ').upper()
+    
+    loc_cliente['destinatario'] = nome_destinatario
+    loc_cliente['cep'] = cep
+    loc_cliente['rua'] = rua
+    loc_cliente['num'] = num
+    loc_cliente['complemento'] = complemento
+    loc_cliente['bairro'] = bairro
+    loc_cliente['cidade'] = cidade
+    loc_cliente['estado'] = estado
+
+    print('\nENDEREÇO CADASTRADO')
+    print('-'*80)
+
+def pagamento():
+
+    while True:
+
+        forma_pagamento = input('\nESCOLHA A FORMA DE PAGAMENTO:\n\n(1) BOLETO\n(2) PIX\n(3) CARTÕES DE CREDITO\n\nDIGITE O NÚMERO: ')
+
+        if forma_pagamento == '1':
+
+            print(f'\nO BOLETO FOI ENVIADO PARA {cliente['email']}')
+            print('\nIMPRIMA O BOLETO E PAGE NO BANCO OU LOTÉRICA')
+            print('\nOU PAGE PELA INTERNET USANDO O CÓDIGO DE BARRAS')
+            print('\nO PRAZO DE VALIDADE DO BOLETO É DE 1 DIA ÚTIL')
+
+            print('\nAGUARDANDO PAGAMENTO!')
+
+            break
+
+        elif forma_pagamento == '2':
+
+            print(f'\nO QR CODE JUNTO A CHAVE PIX FOI ENVIADO PARA {cliente['email']}')
+            print('\nAGUARDANDO PAGAMENTO!')
+
+            break
+        
+        elif forma_pagamento == '3':
+
+            numero_cartao = input('NÚMERO DO CARTÃO: ')
+            nome_impresso = input('NOME IMPRESSO NO CARTÃO: ').upper()
+            data_nascimento = input('DATA DE NASCIMENTO: ')
+            validade = input('VALIDADE (MM/AAAA): ')
+            codigo_segurança = input('CÓDIGO DE SEGURANÇA: ')
+            numero_parcelas = int(input('NÚMERO DE PARCELAS: \n\n(1) CRÉDITO A VISTA\n(2) 2 VEZES\n(3) 3 VEZES\n(4) 4 VEZES\n(5) 5 VEZES\n(6) 6 VEZES\n(7) 7 VEZES\n(8) 8 VEZES\n(9) 9 VEZES\n(10) 10 VEZES\n(11) 11 VEZES\n(12) 12 VEZES\n\nDIGITE O NÚMMERO DE PARCELAS: '))
+
+            cartao_credito['numero_cartao'] = numero_cartao
+            cartao_credito['nome_impresso'] = nome_impresso
+            cartao_credito['data_nascimento'] = data_nascimento
+            cartao_credito['validade'] = validade
+            cartao_credito['codigo_seguranca'] = codigo_segurança
+
+            total_parcelado = total_compra / numero_parcelas
+
+            print('\nPAGAMENTO EFETUADO\n')
+            print('{} PARCELAS DE R${2:.f}'.format(numero_parcelas, total_parcelado))
+
+            break
+
+        else:
+            print('OPÇÃO INVÁLIDA')
 def login():
     print('-'*80)
     print('LOGIN\n')
@@ -206,7 +299,7 @@ print('\n----CATALOGO----\n')
 
 def camisetas():
 
-    escolha_tamanho = input('ESCOLHA O TAMANHO:\n(1) M\n(2) G\n(3) GG\n(4) XG\nDIGITE O NÚMERO: ')
+    escolha_tamanho = input('\nESCOLHA O TAMANHO:\n\n(1) M\n(2) G\n(3) GG\n(4) XG\n\nDIGITE O NÚMERO: ')
 
     if escolha_tamanho == '1':
 
@@ -216,9 +309,9 @@ def camisetas():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
 
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
 
             elif escolha_produto in camisas_M:
@@ -232,10 +325,10 @@ def camisetas():
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
+                print('\nPRODUTO NÃO ENCONTRADO')
     
     elif escolha_tamanho == '2':
 
@@ -245,9 +338,9 @@ def camisetas():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
 
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
 
             elif escolha_produto in camisas_G:
@@ -261,10 +354,10 @@ def camisetas():
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
+                print('\nPRODUTO NÃO ENCONTRADO')
     
     elif escolha_tamanho == '3':
 
@@ -274,9 +367,9 @@ def camisetas():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
 
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
 
             elif escolha_produto in camisas_GG:
@@ -290,10 +383,10 @@ def camisetas():
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
+                print('\nPRODUTO NÃO ENCONTRADO')
     
     elif escolha_tamanho == '4':
 
@@ -303,9 +396,9 @@ def camisetas():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
 
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
 
             elif escolha_produto in camisas_XG:
@@ -319,10 +412,10 @@ def camisetas():
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
+                print('\nPRODUTO NÃO ENCONTRADO')
     
 
         print('\nCARRINHO DE COMPRAS:')
@@ -332,7 +425,7 @@ def camisetas():
 
 while True:
 
-    escolha = input('O QUE VOCÊ PROCURA?\n\n(1) CAMISETAS\n(2) CALÇA\n(3) BERMUDA\n(4) MOLETOM\n(5) BONÉ\n(6) GORRO\n(7) SLIDE\n\nDIGITE O NÚMERO: ')
+    escolha = input('\nO QUE VOCÊ PROCURA?\n\n(1) CAMISETAS\n(2) CALÇA\n(3) BERMUDA\n(4) MOLETOM\n(5) BONÉ\n(6) GORRO\n(7) SLIDE\n\nDIGITE O NÚMERO: ')
 
     if escolha == '1':
         camisetas()
@@ -343,9 +436,9 @@ while True:
             for chave, produto_preco in calças.items():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
             
             elif escolha_produto in calças:
@@ -359,10 +452,10 @@ while True:
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')  
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
+                print('\nPRODUTO NÃO ENCONTRADO')
     
         print('\nCARRINHO DE COMPRAS:')
         for produto, quantidade in carrinho_compras.items():
@@ -378,9 +471,9 @@ while True:
             for chave, produto_preco in bermuda.items():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
             
             elif escolha_produto in bermuda:
@@ -394,10 +487,10 @@ while True:
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')  
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
+                print('\nPRODUTO NÃO ENCONTRADO')
     
         print('\nCARRINHO DE COMPRAS:')
         for produto, quantidade in carrinho_compras.items():
@@ -413,9 +506,9 @@ while True:
             for chave, produto_preco in moletom.items():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
             
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
             
             elif escolha_produto in moletom:
@@ -429,10 +522,10 @@ while True:
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')  
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
+                print('\nPRODUTO NÃO ENCONTRADO')
     
         print('\nCARRINHO DE COMPRAS:')
         for produto, quantidade in carrinho_compras.items():
@@ -448,9 +541,9 @@ while True:
             for chave, produto_preco in bone.items():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
             
             elif escolha_produto in bone:
@@ -464,10 +557,10 @@ while True:
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')  
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
+                print('\nPRODUTO NÃO ENCONTRADO')
     
         print('\nCARRINHO DE COMPRAS:')
         for produto, quantidade in carrinho_compras.items():
@@ -483,9 +576,9 @@ while True:
             for chave, produto_preco in gorro.items():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
             
             elif escolha_produto in gorro:
@@ -499,10 +592,10 @@ while True:
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')  
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
+                print('\nPRODUTO NÃO ENCONTRADO')
     
         print('\nCARRINHO DE COMPRAS:')
         for produto, quantidade in carrinho_compras.items():
@@ -510,20 +603,23 @@ while True:
             print(f'{quantidade}x {produto} - Preços: {precos}')
 
     elif escolha == '7':
+
         print('\n----SLIDE----')
+
         while True:
+
             for chave, produto_preco in slide.items():
                 print(f"{chave} - {list(produto_preco.keys())[0]} - R${list(produto_preco.values())[0]}")
 
-            escolha_produto = input('DIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
+            escolha_produto = input('\nDIGITE O NÚMERO DA PEÇA QUE DESEJA OU (X) PARA ENCERRAR: ').upper()
             if escolha_produto == 'X':
-                print('SESSÃO ENCERRADA')
+                print('\nSESSÃO ENCERRADA')
                 break
-            
+
             elif escolha_produto in slide:
                 produto = list(slide[escolha_produto].keys())[0]
                 preco = list(slide[escolha_produto].values())[0]
-                
+
                 if produto in carrinho_compras:
                     carrinho_compras[produto] += 1
 
@@ -531,11 +627,11 @@ while True:
                     carrinho_compras[produto] = 1
                     preco_produtos[produto] = [preco]
                     
-                print(f'PRODUTO {produto} ADICIONADO NO CARRINHO')  
+                print(f'\nPRODUTO {produto} ADICIONADO NO CARRINHO\n')  
 
             else:
-                print('PRODUTO NÃO ENCONTRADO')
-    
+                print('\nPRODUTO NÃO ENCONTRADO')
+
         print('\nCARRINHO DE COMPRAS:')
         for produto, quantidade in carrinho_compras.items():
             precos = preco_produtos[produto]
@@ -544,6 +640,52 @@ while True:
     escolha_finalizar = input('\nSE DESEJA COMPRAR MAIS PRODUTOS PRECIONE (ENTER) OU DIGITE  X PARA FINALIZAR A COMPRA: ').upper()
 
     if escolha_finalizar == 'X':
-        print('SESSÃO ENCERRADA')
+        print('\nSESSÃO ENCERRADA')
 
         break
+
+print('\nCARRINHO DE COMPRAS:')
+
+total_compra = 0.0
+
+for produto, quantidade in carrinho_compras.items():
+    preco_unitario = preco_produtos[produto][0]
+    preco_total_produto = quantidade * preco_unitario
+    total_compra += preco_total_produto
+    print(f'{quantidade}x {produto} - Preço unitário: R${preco_unitario:.2f} - Preço total: R${preco_total_produto:.2f}')
+    
+print(f'\nTOTAL DA COMPRA: R${total_compra:.2f}')
+
+while True:
+
+    localizaçao = input('\n ESCOLHA A FORMA DE ENTREGA:\n \n (1) FRETE GRÁTIS\n\n (2) RETIRAR NA LOJA\n \nDIGITE O NÚMERO: ')
+
+    if localizaçao == '1':
+        print('-'*80)
+        print('FRETE GRÁTIS')
+        print('-'*80)
+
+        loc_usuario()
+
+        print('-'*80)
+        print('PAGAMENTO')
+        print('-'*80)
+
+        pagamento()
+
+
+
+        break
+
+    elif localizaçao == '2':
+        print('-'*80)
+        print('RETIRAR NA LOJA')
+        print('-'*80)
+        print('\nAGUARDAMOS VOCÊ')
+
+        break
+
+    else:
+        print('\nOPÇÃO INVÁLIDA')
+
+print('\nOBRIGADO PELA PREFERÊNCIA!')
